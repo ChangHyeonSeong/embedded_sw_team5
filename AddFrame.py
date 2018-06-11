@@ -1,14 +1,18 @@
+# -*- coding: utf-8 -*-
+
 import train
 import sqlite3
 from PySide import QtCore, QtGui
-class AddWindow(QtGui.QWidget):
+class AddWindow(QtGui.QDialog):
+#######################카드등록화면UI설정############################
     def __init__(self, uid, csocket):
 	self.sock = csocket
-        QtGui.QWidget.__init__(self)
+        QtGui.QDialog.__init__(self)
 	self.read_uid = uid
         self.setWindowTitle("Click Window")
         self.setGeometry(300, 200, 300, 200)
-	self.label_empid = QtGui.QLabel("input empid",self)
+
+	self.label_empid = QtGui.QLabel("사원 번호를 입력하세요",self)
         self.label_empid.setGeometry(10,10,100,20)
 	self.edit_empid = QtGui.QLineEdit(self)
 	self.edit_empid.setGeometry(10,40,100,20)
@@ -49,7 +53,7 @@ class AddWindow(QtGui.QWidget):
         self.btnOk = QtGui.QPushButton('ok', self)
         self.btnOk.setGeometry(190, 130, 80, 40)
 	self.btnOk.clicked.connect(self.btnOkClick)
-
+####################번호가있는버튼클릭했을때이벤트처리#################
     def btn0Click(self):
 	print self.edit_empid.text()
         self.edit_empid.setText(self.edit_empid.text()+self.btn0.text())
@@ -80,6 +84,10 @@ class AddWindow(QtGui.QWidget):
     def btn9Click(self):
 	print self.edit_empid.text()
         self.edit_empid.setText(self.edit_empid.text()+self.btn9.text())
+
+#############################확인버튼클릭###############################
+#사원번호를 입력하고 확인버튼을 클릭했을 때 서버 내 데이터 베이스에서 
+#사원 테이블에 존재하면 카드 등록
     def btnOkClick(self):
 	empid = self.edit_empid.text()
 	self.sock.send("Add$"+empid.encode())
@@ -95,4 +103,4 @@ class AddWindow(QtGui.QWidget):
 		else:
 			print"xxx"
 	else :
-		print "emp_id x"
+		self.label_empid.setText("없는 사원 번호 입니다.")

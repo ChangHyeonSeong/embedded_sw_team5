@@ -24,9 +24,9 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
-
+import thread
+import time
 continue_reading = True
-
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
     global continue_reading
@@ -39,7 +39,8 @@ signal.signal(signal.SIGINT, end_read)
 
 # Create an object of the class MFRC522
 MIFAREReader = MFRC522.MFRC522()
-
+#GPIO.setmode(GPIO.BCM)
+#GPIO.setup(24,GPIO.OUT)
 # Welcome message
 def run():
 	print "Welcome to the MFRC522 data read example"
@@ -52,6 +53,9 @@ def run():
 
 	    # If a card is found
 	    if status == MIFAREReader.MI_OK:
+#		GPIO.output(24,True)
+#		time.sleep(0.5)
+#		GPIO.output(24,False)
 		print "Card detected"
 	    
 	    # Get the UID of the card
