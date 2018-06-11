@@ -61,9 +61,6 @@ def run(fn_name):
 		face_resize = cv2.resize(face, (im_width, im_height))
 
 		# Draw rectangle and write name
-		cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
-		cv2.putText(frame, fn_name, (x - 10, y - 10), cv2.FONT_HERSHEY_PLAIN,
-		    1,(0, 255, 0))
 
 		# Remove false positives
 		if(w * 6 < width or h * 6 < height):
@@ -85,7 +82,6 @@ def run(fn_name):
 
 	    if(pause > 0):
 		pause = (pause + 1) % 5
-	    cv2.imshow('OpenCV', frame)
 	    key = cv2.waitKey(10)
 	    if key == 27:
 		break
